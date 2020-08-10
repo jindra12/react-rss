@@ -12,9 +12,6 @@
     "view": "yarn build-project; yarn --force; yarn bundle; firefox ./public/index.html"
   },
   "devDependencies": {
-    "@types/jquery": "^3.3.38",
-    "@types/redux": "^3.6.0",
-    "@types/redux-thunk": "^2.1.0"
   },
   "dependencies": {
     "react": "^16.13.1",

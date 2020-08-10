@@ -8,13 +8,13 @@ export interface InjectionRSSProps {
 }
 
 export interface InjectionRSSUrlProps {
-    url: string;
+    url?: string;
     subscribe?: boolean;
+    loadingComponent?: () => JSX.Element;
+    errorComponent?: (props: { error: any, contents: Standart2RSSFormat | null }) => JSX.Element;
 }
 
 export interface RSSProps extends InjectionRSSUrlProps {
-    loader?: () => JSX.Element;
-    error?: (props: { error: any, contents: Standart2RSSFormat | null }) => JSX.Element;
     children: (rss: Standart2RSSFormat) => JSX.Element | null;
 }
 

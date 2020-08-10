@@ -18,6 +18,9 @@ class RSS extends Component<RSSProps, RSSState> {
         const { props } = this;
         this.setState({ loading: true });
         try {
+            if (!props.url) {
+                throw Error('Cannot set up rss feed of nonexistent url!');
+            }
             const contents = await getRss(props.url, window.fetch);
             this.setState({ contents, loading: false, error: null });
             if (props.subscribe) {
@@ -25,6 +28,9 @@ class RSS extends Component<RSSProps, RSSState> {
                 this.interval = window.setInterval(
                     async () => {
                         try {
+                            if (!props.url) {
+                                throw Error('Cannot set up rss feed of nonexistent url!');
+                            }
                             this.setState({ loading: true });
                             const contents = await getRss(props.url, window.fetch);
                             this.setState({ contents, loading: false, error: null });  
@@ -48,13 +54,13 @@ class RSS extends Component<RSSProps, RSSState> {
     public render() {
         const { state, props } = this;
         if (state.loading) {
-            if (props.loader) {
-                const Loader = props.loader;
+            if (props.loadingComponent) {
+                const Loader = props.loadingComponent;
                 return <Loader />;
             }
         } else if (state.error) {
-            if (props.error) {
-                const Error = props.error;
+            if (props.errorComponent) {
+                const Error = props.errorComponent;
                 return <Error contents={state.contents} error={state.error} />
             }
         } else if (state.contents) {
@@ -65,16 +71,14 @@ class RSS extends Component<RSSProps, RSSState> {
 }
 
 export const rssEnhancer = <T, E extends (string | null) = null>(
-    Component: ((props: T & InjectionRSSProps) => JSX.Element | null) | (new (props: T & InjectionRSSProps) => JSX.Element | null),
+    Component: ((props: T & InjectionRSSProps) => JSX.Element | null) | (new (props: T & InjectionRSSProps) => React.Component<T & InjectionRSSProps>),
     url: E = null as any,
-    loader?: () => JSX.Element,
-    error?: (props: { error: any, contents: Standart2RSSFormat | null }) => JSX.Element,
-) => (props: Omit<T, 'rss'> & (E extends null ? InjectionRSSUrlProps : InjectionRSSUrlProps & { url: undefined })) => {
+) => (props: Omit<T, 'rss'> & InjectionRSSUrlProps) => {
     return (
         <RSS
             url={(props.url || url) as any}
-            loader={loader}
-            error={error}
+            loadingComponent={props.loadingComponent}
+            errorComponent={props.errorComponent}
         >
             {rss => (
                 <Component {...props as any} rss={rss} />

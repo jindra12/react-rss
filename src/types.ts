@@ -4,13 +4,28 @@ export interface Standart2RSSFormat {
 }
 
 export interface InjectionRSSProps {
+    /**
+     * Formatted RSS2 standard feed
+     */
     rss: Standart2RSSFormat;
 }
 
 export interface InjectionRSSUrlProps {
+    /**
+     * Url of resource you want to load. Make sure CORS are set up right. You can either use this param or the default one exposed on enhancer.
+     */
     url?: string;
+    /**
+     * Should the feed subscribe and refresh to a news interval using Time To Live param?
+     */
     subscribe?: boolean;
+    /**
+     * Component to display when loading
+     */
     loadingComponent?: () => JSX.Element;
+    /**
+     * Component to display for error state with last known contents
+     */
     errorComponent?: (props: { error: any, contents: Standart2RSSFormat | null }) => JSX.Element;
 }
 

@@ -1,0 +1,36 @@
+{
+  "name": "react-rss",
+  "version": "0.0.1",
+  "description": "React component capable of reading and rendering any RSS feed",
+  "main": "index.js",
+  "repository": "https://github.com/jindra12/react-rss.git",
+  "author": "Jan Jindráček",
+  "license": "MIT",
+  "man": [
+    "./README.md"
+  ],
+  "keywords": [
+    "rss",
+    "react",
+    "component",
+    "no dependency",
+    "reader",
+    "news",
+    "source",
+    "compatible",
+    "information",
+    "feed",
+    "rss feed",
+    "typescript",
+    "typed",
+    "simple",
+    "reading",
+    "read",
+    "newspaper",
+    "intel"
+  ],
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

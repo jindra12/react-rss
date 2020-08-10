@@ -1,0 +1,5 @@
+node_modules
+dist/**/*.js
+dist/**/*.d.ts
+types
+test/apiKey.ts

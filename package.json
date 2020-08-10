@@ -1,0 +1,22 @@
+{
+  "name": "react-rss-dev",
+  "version": "1.0.0",
+  "description": "react-rss-dev package",
+  "main": "./dist/index.js",
+  "repository": "https://github.com/jindra12/react-rss.git",
+  "author": "Jan Jindráček",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm ./dist/index.js ./dist/index.d.ts ./dist/components/* ./dist/utils/* ./dist/types.d.ts ./dist/types.js; yarn tsc"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.7",
+    "@types/react-dom": "^16.9.8",
+    "tslint": "^6.1.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

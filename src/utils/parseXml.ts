@@ -19,9 +19,9 @@ export const parseXml = (
         const rss: Standart2RSSFormat = {
             header: {
                 blogChannel: {
-                    blink: getFromChannel(channel, 'blogChannel:blink'),
-                    blogRoll: getFromChannel(channel, 'blogChannel:blogRoll'),
-                    mySubscriptions: getFromChannel(channel, 'blogChannel:mySubscriptions'),
+                    blink: getFromChannel(channel, 'blogChannel\\:blink'),
+                    blogRoll: getFromChannel(channel, 'blogChannel\\:blogRoll'),
+                    mySubscriptions: getFromChannel(channel, 'blogChannel\\:mySubscriptions'),
                 },
                 category: {
                     category: getFromChannel(channel, 'category'),
@@ -72,6 +72,7 @@ export const parseXml = (
         };
         return rss;
     } catch (e) {
-        throw `Failed to parse RSS! Most likely a malformed field. Exception: ${JSON.stringify(e)}`;
+        console.error(e.message);
+        throw 'Failed to parse RSS! Most likely a malformed field.';
     }
 };

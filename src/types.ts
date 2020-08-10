@@ -3,6 +3,21 @@ export interface Standart2RSSFormat {
     items: Standart2RSSFormatItem[];
 }
 
+export interface InjectionRSSProps {
+    rss: Standart2RSSFormat;
+}
+
+export interface InjectionRSSUrlProps {
+    url: string;
+    subscribe?: boolean;
+}
+
+export interface RSSProps extends InjectionRSSUrlProps {
+    loader?: () => JSX.Element;
+    error?: (props: { error: any, contents: Standart2RSSFormat | null }) => JSX.Element;
+    children: (rss: Standart2RSSFormat) => JSX.Element | null;
+}
+
 export interface Standart2RSSFormatHeader {
     title: string;
     image?: {

@@ -7,11 +7,16 @@
   "author": "Jan Jindráček",
   "license": "MIT",
   "scripts": {
-    "build": "rm ./dist/index.js ./dist/index.d.ts ./dist/components/* ./dist/utils/* ./dist/types.d.ts ./dist/types.js; yarn tsc"
+    "build": "rm ./dist/index.js ./dist/index.d.ts ./dist/components/* ./dist/utils/* ./dist/types.d.ts ./dist/types.js; yarn tsc",
+    "test": "yarn jest --watch"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.9",
     "@types/node-fetch": "^2.5.7",
     "@types/react-dom": "^16.9.8",
+    "jest": "^26.3.0",
+    "matchto": "^1.8.0",
+    "ts-jest": "^26.1.4",
     "tslint": "^6.1.2",
     "typescript": "^3.8.3"
   },

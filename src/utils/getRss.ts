@@ -2,9 +2,7 @@ import { parseXml } from "./parseXml";
 
 export const getRss = async (
     url: string,
-    fetch: undefined | ((input: RequestInfo, init?: RequestInit) => Promise<Response>) = typeof window !== 'undefined' && typeof window.fetch !== 'undefined' 
-        ? window.fetch
-        : undefined,
+    fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
 ) => {
     if (!fetch) {
         throw Error('Cannot find any fetch function!');

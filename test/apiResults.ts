@@ -18,6 +18,9 @@ export const apiResults: { [index: string]: string } = {
             <managingEditor>dave@userland.com</managingEditor>
             <webMaster>dave@userland.com</webMaster>
             <ttl>40</ttl>
+            <newProperty>
+                New message!
+            </newProperty>
             <item>
                 <description>&quot;rssflowersalignright&quot;With any luck we should have one or two more days of namespaces stuff here on Scripting News. It feels like it's winding down. Later in the week I'm going to a &lt;a href=&quot;http://harvardbusinessonline.hbsp.harvard.edu/b02/en/conferences/conf_detail.jhtml?id=s775stg&amp;pid=144XCF&quot;&gt;conference&lt;/a&gt; put on by the Harvard Business School. So that should change the topic a bit. The following week I'm off to Colorado for the &lt;a href=&quot;http://www.digitalidworld.com/conference/2002/index.php&quot;&gt;Digital ID World&lt;/a&gt; conference. We had to go through namespaces, and it turns out that weblogs are a great way to work around mail lists that are clogged with &lt;a href=&quot;http://www.userland.com/whatIsStopEnergy&quot;&gt;stop energy&lt;/a&gt;. I think we solved the problem, have reached a consensus, and will be ready to move forward shortly.</description>
                 <pubDate>Mon, 30 Sep 2002 01:56:02 GMT</pubDate>
@@ -76,7 +79,7 @@ export const apiResults: { [index: string]: string } = {
                     &lt;p&gt;&lt;a href=&quot;http://davenet.userland.com/1995/01/04/demoingsoftwareforfunprofi&quot;&gt;1/4/95&lt;/a&gt;: &quot;By the way, the person with the big problem is probably a competitor.&quot;&lt;/p&gt;
                     &lt;p&gt;I've had a fair amount of experience in the last few years with what you might call standards work. XML-RPC, SOAP, RSS, OPML. Each has been different from the others. In all this work, the most positive experience was XML-RPC, and not just because of the technical excellence of the people involved. In the end, what matters more to me is &lt;a href=&quot;http://www.dictionary.com/search?q=collegiality&quot;&gt;collegiality&lt;/a&gt;. Working together, person to person, for the sheer pleasure of it, is even more satisfying than a good technical result. Now, getting both is the best, and while XML-RPC is not perfect, it's pretty good. I also believe that if you have collegiality, technical excellence follows as a natural outcome.&lt;/p&gt;
                     &lt;p&gt;One more bit of philosophy. At my checkup earlier this week, one of the things my cardiologist asked was if I was experiencing any kind of intellectual dysfunction. In other words, did I lose any of my sharpness as a result of the surgery in June. I told him yes I had and thanked him for asking. In an amazing bit of synchronicity, the next day John Robb &lt;a href=&quot;http://jrobb.userland.com/2002/09/25.html#a2598&quot;&gt;located&lt;/a&gt; an article in New Scientist that said that scientists had found a way to prevent this from happening. I hadn't talked with John about my experience or the question the doctor asked. Yesterday I was telling the story to my friend Dave Jacobs. He said it's not a problem because I always had excess capacity in that area. Exactly right Big Dave and thanks for the vote of confidence.&lt;/p&gt;
-                    </description>
+                </description>
                 <pubDate>Sun, 29 Sep 2002 11:13:10 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#reallyEarlyMorningNocoffeeNotes</guid>
                 </item>

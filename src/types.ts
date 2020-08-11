@@ -1,13 +1,13 @@
-export interface Standart2RSSFormat {
-    header: Standart2RSSFormatHeader;
-    items: Standart2RSSFormatItem[];
+export interface Standard2RSSFormat {
+    header: Standard2RSSFormatHeader;
+    items: Standard2RSSFormatItem[];
 }
 
-export interface InjectionRSSProps {
+export interface InjectionRSSProps<T = {}> {
     /**
      * Formatted RSS2 standard feed
      */
-    rss: Standart2RSSFormat;
+    rss: Standard2RSSFormat & T;
 }
 
 export interface InjectionRSSUrlProps {
@@ -26,14 +26,16 @@ export interface InjectionRSSUrlProps {
     /**
      * Component to display for error state with last known contents
      */
-    errorComponent?: (props: { error: any, contents: Standart2RSSFormat | null }) => JSX.Element;
+    errorComponent?: (props: { error: any, contents: Standard2RSSFormat | null }) => JSX.Element;
 }
 
-export interface RSSProps extends InjectionRSSUrlProps {
-    children: (rss: Standart2RSSFormat) => JSX.Element | null;
+export interface RSSProps<T = {}> extends InjectionRSSUrlProps {
+    requestEnhancer?: (url: string) => ({ input: RequestInfo, init?: RequestInit });
+    responseEnhancer?: (rssElement: Element, standard: Standard2RSSFormat) => T & Standard2RSSFormat
+    children: (rss: Standard2RSSFormat & T) => JSX.Element | null;
 }
 
-export interface Standart2RSSFormatHeader {
+export interface Standard2RSSFormatHeader {
     title: string;
     image?: {
         url: string;
@@ -63,7 +65,7 @@ export interface Standart2RSSFormatHeader {
     ttl: string;
 }
 
-export interface Standart2RSSFormatItem {
+export interface Standard2RSSFormatItem {
     description: string;
     pubDate: string;
     guid: string;

@@ -3,7 +3,7 @@
 Higher order component capable of injecting RSS feed from any url into props.
 
 
-So far this feed only supports standart RSS params defined in: https://validator.w3.org/feed/docs/rss2.html.
+So far this feed only supports standard RSS params defined in: https://validator.w3.org/feed/docs/rss2.html.
 
 ## Example of usage
 

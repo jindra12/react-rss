@@ -1,4 +1,4 @@
-import { Standart2RSSFormat, Standart2RSSFormatItem } from "../types";
+import { Standard2RSSFormat, Standard2RSSFormatItem } from "../types";
 
 const getFromChannel = (channel: Element, query: string) => channel.querySelector(query)?.textContent || '';
 const HTMLCollectionArray = (collection: HTMLCollectionOf<Element>) => {
@@ -9,14 +9,16 @@ const HTMLCollectionArray = (collection: HTMLCollectionOf<Element>) => {
     return acc;
 }
 
-export const parseXml = (
+export const parseXml = <T>(
     xml: string,
-): Standart2RSSFormat => {
+    enhancer?: (rssElement: Element, standard: Standard2RSSFormat) => T & Standard2RSSFormat
+): Standard2RSSFormat & T => {
     const doc = new DOMParser().parseFromString(xml, 'text/xml');
     try {
-        const channel = doc.querySelector('rss')!.querySelector('channel')!;
+        const rssElement = doc.querySelector('rss');
+        const channel = rssElement!.querySelector('channel')!;
         const image = channel.querySelector('image');
-        const rss: Standart2RSSFormat = {
+        const rss: Standard2RSSFormat = {
             header: {
                 blogChannel: {
                     blink: getFromChannel(channel, 'blogChannel\\:blink'),
@@ -46,7 +48,7 @@ export const parseXml = (
                 ttl: getFromChannel(channel, 'ttl'),
                 webMaster: getFromChannel(channel, 'webMaster'),
             },
-            items: HTMLCollectionArray(channel.getElementsByTagName('item')).map((item): Standart2RSSFormatItem => {
+            items: HTMLCollectionArray(channel.getElementsByTagName('item')).map((item): Standard2RSSFormatItem => {
                 const enclosure = item.querySelector('enclosure');
                 const source = item.querySelector('source');
                 return {
@@ -70,7 +72,10 @@ export const parseXml = (
                 };
             }),
         };
-        return rss;
+        if (enhancer) {
+            return enhancer(rssElement!, rss);
+        }
+        return rss as any;
     } catch (e) {
         console.error(e.message);
         throw 'Failed to parse RSS! Most likely a malformed field.';

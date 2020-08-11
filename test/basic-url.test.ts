@@ -17,7 +17,21 @@ global.fetch = jest.fn((url: string) => {
 
 describe("Can send and parse basic rss api results", () => {
     test("http://static.userland.com/gems/backend/rssTwoExample2.xml", async () => {
-        const result = await getRss("http://static.userland.com/gems/backend/rssTwoExample2.xml", global.fetch);
+        const result = await getRss(
+            { input: "http://static.userland.com/gems/backend/rssTwoExample2.xml" },
+            global.fetch,
+            (rss, standard) => {
+                const newProperty = rss.querySelector('newProperty')?.textContent || '';
+                return { 
+                    header: {
+                        ...standard.header,
+                        newProperty: newProperty,
+                    },
+                    items: standard.items,
+                };
+            }
+        );
+        console.log(result);
         expect(match(result).to({
             header: {
                 blogChannel: {
@@ -29,6 +43,7 @@ describe("Can send and parse basic rss api results", () => {
                 webMaster: 'dave@userland.com',
                 ttl: '40',
                 managingEditor: 'dave@userland.com',
+                newProperty: 'New message!',
             },
             items: [
                 {

@@ -31,7 +31,6 @@ describe("Can send and parse basic rss api results", () => {
                 };
             }
         );
-        console.log(result);
         expect(match(result).to({
             header: {
                 blogChannel: {

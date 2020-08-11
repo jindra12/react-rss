@@ -1,4 +1,4 @@
-import { Standard2RSSFormat, Standard2RSSFormatItem } from "../types";
+import { Standard2RSSFormat, Standard2RSSFormatItem, Standard2RSSFormatHeader } from "../types";
 
 const getFromChannel = (channel: Element, query: string) => channel.querySelector(query)?.textContent || '';
 const HTMLCollectionArray = (collection: HTMLCollectionOf<Element>) => {
@@ -9,10 +9,11 @@ const HTMLCollectionArray = (collection: HTMLCollectionOf<Element>) => {
     return acc;
 }
 
-export const parseXml = <T>(
+export const parseXml = <T, E>(
     xml: string,
-    enhancer?: (rssElement: Element, standard: Standard2RSSFormat) => T & Standard2RSSFormat
-): Standard2RSSFormat & T => {
+    enhancer?: (rssElement: Element, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader,
+    itemEnhancer?: (item: Element, standard: Standard2RSSFormatItem) => E & Standard2RSSFormatItem,
+): Standard2RSSFormat & { header: T } & { items: E[] } => {
     const doc = new DOMParser().parseFromString(xml, 'text/xml');
     try {
         const rssElement = doc.querySelector('rss');
@@ -48,10 +49,10 @@ export const parseXml = <T>(
                 ttl: getFromChannel(channel, 'ttl'),
                 webMaster: getFromChannel(channel, 'webMaster'),
             },
-            items: HTMLCollectionArray(channel.getElementsByTagName('item')).map((item): Standard2RSSFormatItem => {
+            items: HTMLCollectionArray(channel.getElementsByTagName('item')).map((item): Standard2RSSFormatItem & E => {
                 const enclosure = item.querySelector('enclosure');
                 const source = item.querySelector('source');
-                return {
+                const result = {
                     author: getFromChannel(item, 'author'),
                     category: getFromChannel(item, 'category'),
                     comments: getFromChannel(item, 'comments'),
@@ -70,10 +71,14 @@ export const parseXml = <T>(
                         url: source.getAttribute('url') || '',
                     } : undefined,
                 };
+                if (itemEnhancer) {
+                    return itemEnhancer(item, result);
+                }
+                return result as any;
             }),
         };
         if (enhancer) {
-            return enhancer(rssElement!, rss);
+            return { header: enhancer(rssElement!, rss.header), items: rss.items as any };
         }
         return rss as any;
     } catch (e) {

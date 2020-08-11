@@ -20,15 +20,19 @@ describe("Can send and parse basic rss api results", () => {
         const result = await getRss(
             { input: "http://static.userland.com/gems/backend/rssTwoExample2.xml" },
             global.fetch,
-            (rss, standard) => {
+            (rss, header) => {
                 const newProperty = rss.querySelector('newProperty')?.textContent || '';
-                return { 
-                    header: {
-                        ...standard.header,
-                        newProperty: newProperty,
-                    },
-                    items: standard.items,
+                return {
+                    ...header,
+                    newProperty,
                 };
+            },
+            (rssItem, item) => {
+                const newProperty = rssItem.querySelector('newProperty')?.textContent || '';
+                return {
+                    newProperty,
+                    ...item,
+                }
             }
         );
         expect(match(result).to({
@@ -47,6 +51,7 @@ describe("Can send and parse basic rss api results", () => {
             items: [
                 {
                     title: '',
+                    newProperty: 'Wowie!',
                     description: `"rssflowersalignright"With any luck we should have one or two more days of namespaces stuff here on Scripting News. It feels like it's winding down. Later in the week I'm going to a <a href="http://harvardbusinessonline.hbsp.harvard.edu/b02/en/conferences/conf_detail.jhtml?id=s775stg&pid=144XCF">conference</a> put on by the Harvard Business School. So that should change the topic a bit. The following week I'm off to Colorado for the <a href="http://www.digitalidworld.com/conference/2002/index.php">Digital ID World</a> conference. We had to go through namespaces, and it turns out that weblogs are a great way to work around mail lists that are clogged with <a href="http://www.userland.com/whatIsStopEnergy">stop energy</a>. I think we solved the problem, have reached a consensus, and will be ready to move forward shortly.`,
                 },
                 {

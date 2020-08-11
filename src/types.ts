@@ -3,11 +3,15 @@ export interface Standard2RSSFormat {
     items: Standard2RSSFormatItem[];
 }
 
-export interface InjectionRSSProps<T = {}> {
+export interface InjectionRSSProps<T = {}, K = {}> {
     /**
      * Formatted RSS2 standard feed
      */
-    rss: Standard2RSSFormat & T;
+    rss: {
+        header: T & Standard2RSSFormatHeader;
+    } & {
+        items: (K & Standard2RSSFormatItem)[];
+    };
 }
 
 export interface InjectionRSSUrlProps {
@@ -26,13 +30,14 @@ export interface InjectionRSSUrlProps {
     /**
      * Component to display for error state with last known contents
      */
-    errorComponent?: (props: { error: any, contents: Standard2RSSFormat | null }) => JSX.Element;
+    errorComponent?: <T extends Standard2RSSFormat = Standard2RSSFormat>(props: { error: any, contents: T | null }) => JSX.Element;
 }
 
-export interface RSSProps<T = {}> extends InjectionRSSUrlProps {
+export interface RSSProps<T = {}, K = {}> extends InjectionRSSUrlProps {
     requestEnhancer?: (url: string) => ({ input: RequestInfo, init?: RequestInit });
-    responseEnhancer?: (rssElement: Element, standard: Standard2RSSFormat) => T & Standard2RSSFormat
-    children: (rss: Standard2RSSFormat & T) => JSX.Element | null;
+    headerEnhancer?: (rssElement: Element, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader;
+    itemEnhancer?: (item: Element, standard: Standard2RSSFormatItem) => K & Standard2RSSFormatItem;
+    children: (rss: Standard2RSSFormat & { header: T } & { items: K[] }) => JSX.Element | null;
 }
 
 export interface Standard2RSSFormatHeader {

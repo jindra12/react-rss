@@ -1,15 +1,16 @@
 import { parseXml } from "./parseXml";
-import { Standard2RSSFormat } from "../types";
+import { Standard2RSSFormat, Standard2RSSFormatItem, Standard2RSSFormatHeader } from "../types";
 
-export const getRss = async <T>(
+export const getRss = async <T, E>(
     enhanced: { input: RequestInfo, init?: RequestInit },
     fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-    responseEnhancer?: (rssElement: Element, standard: Standard2RSSFormat) => T & Standard2RSSFormat,
-): Promise<T & Standard2RSSFormat> => {
+    headerEnhancer?: (rssElement: Element, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader,
+    itemEnhancer?: (item: Element, standard: Standard2RSSFormatItem) => E & Standard2RSSFormatItem,
+): Promise<Standard2RSSFormat & { header: T } & { items: E[] }> => {
     if (!fetch) {
         throw Error('Cannot find any fetch function!');
     }
     const result = await fetch(enhanced.input, enhanced.init);
     const xml = await result.text();
-    return parseXml(xml, responseEnhancer);
+    return parseXml(xml, headerEnhancer, itemEnhancer);
 };

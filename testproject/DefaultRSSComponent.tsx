@@ -19,5 +19,5 @@ const DefaultRSSComponent: FunctionComponent<{ label: string } & InjectionRSSPro
 
 export default rssEnhancer(
     DefaultRSSComponent,
-    'https://techbeacon.com/rss.xml',
+    'https://ct24.ceskatelevize.cz/rss/hlavni-zpravy',
 );

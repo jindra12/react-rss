@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Standard2RSSFormat, InjectionRSSProps, InjectionRSSUrlProps, RSSProps } from '../types';
+import { Standard2RSSFormat, InjectionRSSProps, InjectionRSSUrlProps, RSSProps, Standard2RSSFormatItem, Standard2RSSFormatHeader } from '../types';
 import { getRss } from '../utils/getRss';
 
 interface RSSState {
@@ -76,7 +76,7 @@ class RSS extends Component<RSSProps, RSSState> {
     private getRss = async () => {
         const { props } = this;
         const enhanced = enhanceUrl(props.url!, props.requestEnhancer);
-        const contents = await getRss(enhanced, window.fetch, props.responseEnhancer);
+        const contents = await getRss(enhanced, window.fetch, props.headerEnhancer, props.itemEnhancer);
         return contents;
     }
 
@@ -123,13 +123,15 @@ class RSS extends Component<RSSProps, RSSState> {
  * @param Component Component to enhance
  * @param url Static url from which to draw
  * @param requestEnhancer You can use this to statically enhance requests by setting request headers, method etc.
- * @param responseEnhancer Use this function to add properties to resulting rss object. You can use standard media queries on rssElement to do so.
+ * @param headerEnhancer Use this function to add properties to resulting rss object. You can use standard media queries on rssElement to do so.
+ * @param itemEnhacer Use this to enhance individual news from feed. You can use standard media queries on item to do so.
  */
 export const rssEnhancer = <T, E extends (string | null) = null>(
     Component: ((props: T & InjectionRSSProps) => JSX.Element | null) | (new (props: T & InjectionRSSProps) => React.Component<T & InjectionRSSProps>),
     url: E = null as any,
     requestEnhancer?: (url: string) => ({ input: RequestInfo, init?: RequestInit }),
-    responseEnhancer?: <F>(rssElement: Element, standard: Standard2RSSFormat) => F & Standard2RSSFormat,
+    headerEnhancer?: <F extends Standard2RSSFormatHeader>(rssElement: Element, standard: Standard2RSSFormatHeader) => F | Standard2RSSFormatHeader,
+    itemEnhancer?: <K extends Standard2RSSFormatItem>(item: Element, standard: Standard2RSSFormatItem) => K | Standard2RSSFormatItem,
 ) => (props: Omit<T, 'rss'> & InjectionRSSUrlProps) => {
     return (
         <RSS
@@ -137,7 +139,8 @@ export const rssEnhancer = <T, E extends (string | null) = null>(
             loadingComponent={props.loadingComponent}
             errorComponent={props.errorComponent}
             requestEnhancer={requestEnhancer}
-            responseEnhancer={responseEnhancer}
+            headerEnhancer={headerEnhancer}
+            itemEnhancer={itemEnhancer}
         >
             {rss => (
                 <Component {...props as any} rss={rss} />

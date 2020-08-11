@@ -23,32 +23,33 @@ export const apiResults: { [index: string]: string } = {
                 <description>&quot;rssflowersalignright&quot;With any luck we should have one or two more days of namespaces stuff here on Scripting News. It feels like it's winding down. Later in the week I'm going to a &lt;a href=&quot;http://harvardbusinessonline.hbsp.harvard.edu/b02/en/conferences/conf_detail.jhtml?id=s775stg&amp;pid=144XCF&quot;&gt;conference&lt;/a&gt; put on by the Harvard Business School. So that should change the topic a bit. The following week I'm off to Colorado for the &lt;a href=&quot;http://www.digitalidworld.com/conference/2002/index.php&quot;&gt;Digital ID World&lt;/a&gt; conference. We had to go through namespaces, and it turns out that weblogs are a great way to work around mail lists that are clogged with &lt;a href=&quot;http://www.userland.com/whatIsStopEnergy&quot;&gt;stop energy&lt;/a&gt;. I think we solved the problem, have reached a consensus, and will be ready to move forward shortly.</description>
                 <pubDate>Mon, 30 Sep 2002 01:56:02 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#When:6:56:02PM</guid>
-                </item>
+                <newProperty>Wowie!</newProperty>
+            </item>
             <item>
                 <description>Joshua Allen: &lt;a href=&quot;http://www.netcrucible.com/blog/2002/09/29.html#a243&quot;&gt;Who loves namespaces?&lt;/a&gt;</description>
                 <pubDate>Sun, 29 Sep 2002 19:59:01 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#When:12:59:01PM</guid>
-                </item>
+            </item>
             <item>
                 <description>&lt;a href=&quot;http://www.docuverse.com/blog/donpark/2002/09/29.html#a68&quot;&gt;Don Park&lt;/a&gt;: &quot;It is too easy for engineer to anticipate too much and XML Namespace is a frequent host of over-anticipation.&quot;</description>
                 <pubDate>Mon, 30 Sep 2002 01:52:02 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#When:6:52:02PM</guid>
-                </item>
+            </item>
             <item>
                 <description>&lt;a href=&quot;http://scriptingnews.userland.com/stories/storyReader$1768&quot;&gt;Three Sunday Morning Options&lt;/a&gt;. &quot;I just got off the phone with Tim Bray, who graciously returned my call on a Sunday morning while he was making breakfast for his kids.&quot; We talked about three options for namespaces in RSS 2.0, and I think I now have the tradeoffs well outlined, and ready for other developers to review. If there is now a consensus, I think we can easily move forward. </description>
                 <pubDate>Sun, 29 Sep 2002 17:05:20 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#When:10:05:20AM</guid>
-                </item>
+            </item>
             <item>
                 <description>&lt;a href=&quot;http://blog.mediacooperative.com/mt-comments.cgi?entry_id=1435&quot;&gt;Mark Pilgrim&lt;/a&gt; weighs in behind option 1 on a Ben Hammersley thread. On the RSS2-Support list, Phil Ringnalda lists a set of &lt;a href=&quot;http://groups.yahoo.com/group/RSS2-Support/message/54&quot;&gt;proposals&lt;/a&gt;, the first is equivalent to option 1. </description>
                 <pubDate>Sun, 29 Sep 2002 19:09:28 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#When:12:09:28PM</guid>
-                </item>
+            </item>
             <item>
                 <description>&lt;a href=&quot;http://effbot.org/zone/effnews-4.htm&quot;&gt;Fredrik Lundh breaks&lt;/a&gt; through, following Simon Fell's lead, now his Python aggregator works with Scripting News &lt;a href=&quot;http://www.scripting.com/rss.xml&quot;&gt;in&lt;/a&gt; RSS 2.0. BTW, the spec is imperfect in regards to namespaces. We anticipated a 2.0.1 and 2.0.2 in the Roadmap for exactly this purpose. Thanks for your help, as usual, Fredrik. </description>
                 <pubDate>Sun, 29 Sep 2002 15:01:02 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#When:8:01:02AM</guid>
-                </item>
+            </item>
             <item>
                 <title>Law and Order</title>
                 <link>http://scriptingnews.userland.com/backissues/2002/09/29#lawAndOrder</link>
@@ -57,7 +58,7 @@ export const apiResults: { [index: string]: string } = {
                     </description>
                 <pubDate>Sun, 29 Sep 2002 23:48:33 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#lawAndOrder</guid>
-                </item>
+            </item>
             <item>
                 <title>Rule 1</title>
                 <link>http://scriptingnews.userland.com/backissues/2002/09/29#rule1</link>
@@ -67,7 +68,7 @@ export const apiResults: { [index: string]: string } = {
                     </description>
                 <pubDate>Sun, 29 Sep 2002 17:24:20 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#rule1</guid>
-                </item>
+            </item>
             <item>
                 <title>Really early morning no-coffee notes</title>
                 <link>http://scriptingnews.userland.com/backissues/2002/09/29#reallyEarlyMorningNocoffeeNotes</link>
@@ -80,7 +81,7 @@ export const apiResults: { [index: string]: string } = {
                 </description>
                 <pubDate>Sun, 29 Sep 2002 11:13:10 GMT</pubDate>
                 <guid>http://scriptingnews.userland.com/backissues/2002/09/29#reallyEarlyMorningNocoffeeNotes</guid>
-                </item>
+            </item>
             </channel>
         </rss>    
     `

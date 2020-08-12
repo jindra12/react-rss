@@ -14,20 +14,7 @@ const enhanceUrl = (url: string, requestEnhancer?: (url: string) => {
 }): {
     input: RequestInfo,
     init?: RequestInit,
-} => {
-    let enhanced: {
-        input: RequestInfo,
-        init?: RequestInit,
-    } = {
-        input: url,
-    };
-    if (requestEnhancer) {
-        enhanced = requestEnhancer(enhanced.input as string);
-    }
-    return {
-        input: url,
-    };
-}
+} => requestEnhancer ? requestEnhancer(url) : { input: url };
 
 class RSS extends Component<RSSProps, RSSState> {
     interval: number | null = null;

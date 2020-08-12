@@ -37,10 +37,6 @@ describe("Can send and parse basic rss api results", () => {
         );
         expect(match(result).to({
             header: {
-                blogChannel: {
-                    blogRoll: 'http://radio.weblogs.com/0001015/userland/scriptingNewsLeftLinks.opml',
-                    blink: 'http://diveintomark.org/',
-                },
                 copyright: 'Copyright 1997-2002 Dave Winer',
                 link: 'http://www.scripting.com/',
                 webMaster: 'dave@userland.com',

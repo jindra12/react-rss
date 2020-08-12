@@ -122,6 +122,61 @@ ReactDOM.render(
 
 ```
 
+### Changes since 1.0.0
+
+Fixed typos in typings of this package. Added enhancers, which allow you to pick custom xml elements (using query selectors) out of RSS and add them to the component props.
+
+
+Also, fixed default parsing of RSS XML document and added component update mechanism when passed url changes.
+
+#### Example of use
+
+```JSX
+
+/**
+ * Props injected have a two-type template: first is header enhancement, second one is with what is each item enhanced.
+ */
+class SourcedRSSComponent extends Component<{ label: string } & InjectionRSSProps<{ hasImage: boolean }, { mediaUrl?: string }>> {
+    public render() {
+        const { props } = this;
+        return (
+            <div>
+                <h2>{props.label}</h2>
+                <a href={props.rss.header.link}>
+                    {props.rss.header.title}
+                    {props.rss.header.hasImage && ' Has image!'}
+                </a>
+                <ul>
+                    {props.rss.items.map(item => (
+                        <li>
+                            {item.description}
+                            {item.mediaUrl && <span>Url: {item.mediaUrl}</span>}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+};
+
+export default rssEnhancer(
+    SourcedRSSComponent,
+    null, // Default url is null, which means resulting component will need an url passed in its props.
+    url => ({ input: url, init: { method: 'POST' } }), // Enhances the used url request by any optional parameter, such as headers, method, etc.
+    (rss, header) => { // Enhances header portion of result
+        return { ...header, hasImage: Boolean(rss.querySelector('image')) };
+    },
+    (rssItem, item) => { // Enhances each item by certain query
+        const mediaUrl = rssItem.querySelector('content')?.getAttribute('url');
+        if (mediaUrl) {
+            return { ...item, mediaUrl };
+        }
+        return item;
+    }
+);
+
+```
+
 ## Addendum
 
 You can either setup an URL in the enhancer, or in the resulting component. However, the url has to be set. You can rewrite default url with the one on component.

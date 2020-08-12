@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import rssEnhancer, { InjectionRSSProps } from 'react-rss';
 
-class SourcedRSSComponent extends Component<{ label: string } & InjectionRSSProps<{ hasImage: boolean }, { encoded?: string }>> {
+/**
+ * Props injected have a two-type template: first is header enhancement, second one is with what is each item enhanced.
+ */
+class SourcedRSSComponent extends Component<{ label: string } & InjectionRSSProps<{ hasImage: boolean }, { mediaUrl?: string }>> {
     public render() {
         const { props } = this;
         return (
@@ -14,8 +17,8 @@ class SourcedRSSComponent extends Component<{ label: string } & InjectionRSSProp
                 <ul>
                     {props.rss.items.map(item => (
                         <li>
-                            {item.description}.
-                            {item.encoded && <span>Encoded: {item.encoded}</span>}
+                            {item.description}
+                            {item.mediaUrl && <span>Url: {item.mediaUrl}</span>}
                         </li>
                     ))}
                 </ul>
@@ -27,14 +30,14 @@ class SourcedRSSComponent extends Component<{ label: string } & InjectionRSSProp
 export default rssEnhancer(
     SourcedRSSComponent,
     null,
-    url => ({ input: url, init: { keepalive: false } }),
-    (rss, header) => {
+    url => ({ input: url, init: { method: 'POST' } }), // Enhances the used url request by any optional parameter, such as headers, method, etc.
+    (rss, header) => { // Enhances header portion of result
         return { ...header, hasImage: Boolean(rss.querySelector('image')) };
     },
-    (rssItem, item) => {
-        const contentEncoded = rssItem.querySelector('content\\:encoded')?.textContent;
-        if (contentEncoded) {
-            return { ...item, encoded: contentEncoded };
+    (rssItem, item) => { // Enhances each item by certain query
+        const mediaUrl = rssItem.querySelector('content')?.getAttribute('url');
+        if (mediaUrl) {
+            return { ...item, mediaUrl };
         }
         return item;
     }

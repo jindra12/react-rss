@@ -21,11 +21,6 @@ export const parseXml = <T, E>(
         const image = channel.querySelector('image');
         const rss: Standard2RSSFormat = {
             header: {
-                blogChannel: {
-                    blink: getFromChannel(channel, 'blogChannel\\:blink'),
-                    blogRoll: getFromChannel(channel, 'blogChannel\\:blogRoll'),
-                    mySubscriptions: getFromChannel(channel, 'blogChannel\\:mySubscriptions'),
-                },
                 category: {
                     category: getFromChannel(channel, 'category'),
                     domain: channel.querySelector('category')?.getAttribute('domain') || '',

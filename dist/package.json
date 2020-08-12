@@ -1,6 +1,6 @@
 {
   "name": "react-rss",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "React component capable of reading and rendering any RSS feed",
   "main": "index.js",
   "repository": "https://github.com/jindra12/react-rss.git",

@@ -52,11 +52,6 @@ export interface Standard2RSSFormatHeader {
     link: string;
     description: string;
     language: string;
-    blogChannel: {
-        blogRoll: string;
-        mySubscriptions: string;
-        blink: string;
-    }
     copyright: string;
     lastBuildDate: string;
     docs: string;

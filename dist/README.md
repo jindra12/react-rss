@@ -164,10 +164,10 @@ export default rssEnhancer(
     null, // Default url is null, which means resulting component will need an url passed in its props.
     url => ({ input: url, init: { method: 'POST' } }), // Enhances the used url request by any optional parameter, such as headers, method, etc.
     (rss, header) => { // Enhances header portion of result
-        return { ...header, hasImage: Boolean(rss.querySelector('image')) };
+        return { ...header, hasImage: Boolean(rss.image) };
     },
-    (rssItem, item) => { // Enhances each item by certain query
-        const mediaUrl = rssItem.querySelector('content')?.getAttribute('url');
+    (rssItem, item) => { // Enhances each item by json property
+        const mediaUrl = rssItem['media:content'].attributes.url;
         if (mediaUrl) {
             return { ...item, mediaUrl };
         }
@@ -176,6 +176,16 @@ export default rssEnhancer(
 );
 
 ```
+
+## Changes since 2.0.0
+
+Added no-dependency parser of xml into a JSON object. The parser can handle attributes, children in xml and text/c-data nodes.
+
+
+For a simple example, see above. This parser stores child nodes under 'children' property. Children will either be objects or arrays, depending on whether there are duplicate children with the same tag name. Parsed attributes will be stored inside 'attributes' property. Text/c-data nodes will be stored under 'text' property and will be concatenated.
+
+
+This was done to simplify object access inside enhancers.
 
 ## Addendum
 

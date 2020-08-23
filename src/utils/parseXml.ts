@@ -1,79 +1,70 @@
 import { Standard2RSSFormat, Standard2RSSFormatItem, Standard2RSSFormatHeader } from "../types";
-
-const getFromChannel = (channel: Element, query: string) => channel.querySelector(query)?.textContent || '';
-const HTMLCollectionArray = (collection: HTMLCollectionOf<Element>) => {
-    const acc: Element[] = [];
-    for (let i = 0; i < collection.length; i++) {
-        acc.push(collection.item(i)!);
-    }
-    return acc;
-}
+import { parseToJson } from "./parseToJson";
 
 export const parseXml = <T, E>(
     xml: string,
-    enhancer?: (rssElement: Element, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader,
-    itemEnhancer?: (item: Element, standard: Standard2RSSFormatItem) => E & Standard2RSSFormatItem,
+    enhancer?: (header: any, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader,
+    itemEnhancer?: (item: any, standard: Standard2RSSFormatItem) => E & Standard2RSSFormatItem,
 ): Standard2RSSFormat & { header: T } & { items: E[] } => {
     const doc = new DOMParser().parseFromString(xml, 'text/xml');
     try {
-        const rssElement = doc.querySelector('rss');
-        const channel = rssElement!.querySelector('channel')!;
-        const image = channel.querySelector('image');
+        const channel = doc.querySelector('rss')!.querySelector('channel');
+        const json = parseToJson(channel!);
         const rss: Standard2RSSFormat = {
             header: {
+                title: json.title?.text || '',
                 category: {
-                    category: getFromChannel(channel, 'category'),
-                    domain: channel.querySelector('category')?.getAttribute('domain') || '',
+                    category: json.category?.text || '',
+                    domain: json.category?.attributes?.domain || '',
                 },
-                copyright: getFromChannel(channel, 'copyright'),
-                description: getFromChannel(channel, 'description'),
-                docs: getFromChannel(channel, 'docs'),
-                generator: getFromChannel(channel, 'generator'),
-                image: image ? {
-                    height: getFromChannel(image, 'height'),
-                    link: getFromChannel(image, 'link'),
-                    title: getFromChannel(image, 'title'),
-                    url: getFromChannel(image, 'url'),
-                    width: getFromChannel(image, 'width')
+                copyright: json.copyright?.text || '',
+                description: json.description?.text || '',
+                docs: json.docs?.text || '',
+                generator: json.generator?.text || '',
+                language: json.language?.text || '',
+                lastBuildDate: json.lastbuilddate?.text || '',
+                link: json.link?.text || '',
+                managingEditor: json.managingeditor?.text || '',
+                ttl: json.ttl?.text || '',
+                webMaster: json.webmaster?.text || '',
+                image: json.image ? {
+                    height: json.image.children?.height || '',
+                    link: json.image.children?.link || '',
+                    title: json.image.children?.title || '',
+                    url: json.image.children?.url || '',
+                    width: json.image.children?.width || '',
                 } : undefined,
-                language: getFromChannel(channel, 'language'),
-                lastBuildDate: getFromChannel(channel, 'lastBuildDate'),
-                link: getFromChannel(channel, 'link'),
-                managingEditor: getFromChannel(channel, 'managingEditor'),
-                title: getFromChannel(channel, 'title'),
-                ttl: getFromChannel(channel, 'ttl'),
-                webMaster: getFromChannel(channel, 'webMaster'),
             },
-            items: HTMLCollectionArray(channel.getElementsByTagName('item')).map((item): Standard2RSSFormatItem & E => {
-                const enclosure = item.querySelector('enclosure');
-                const source = item.querySelector('source');
+            items: json.item.map((item: any): Standard2RSSFormatItem & E => {
+                const enclosure = item.children?.enclosure || '';
+                const source = item.children?.source || '';
                 const result = {
-                    author: getFromChannel(item, 'author'),
-                    category: getFromChannel(item, 'category'),
-                    comments: getFromChannel(item, 'comments'),
-                    description: getFromChannel(item, 'description'),
-                    guid: getFromChannel(item, 'guid'),
-                    link: getFromChannel(item, 'link'),
-                    pubDate: getFromChannel(item, 'pubDate'),
-                    title: getFromChannel(item, 'title'),
+                    author: item.children?.author?.text || '',
+                    category: item.children?.category?.text || '',
+                    comments: item.children?.comments?.text || '',
+                    description: item.children?.description?.text || '',
+                    guid: item.children?.guid?.text || '',
+                    link: item.children?.link?.text || '',
+                    pubDate: item.children?.pubdate?.text || '',
+                    title: item.children?.title?.text || '',
                     enclosure: enclosure ? {
-                        length: enclosure.getAttribute('length') || '',
-                        type: enclosure.getAttribute('type') || '',
-                        url: enclosure.getAttribute('url') || '',
+                        length: enclosure.attributes?.length || '',
+                        type: enclosure.attributes?.type || '',
+                        url: enclosure.attributes?.url || '',
                     } : undefined,
                     source: source ? {
-                        source: source.textContent || '',
-                        url: source.getAttribute('url') || '',
+                        source: source.text || '',
+                        url: source.attributes?.url || '',
                     } : undefined,
                 };
                 if (itemEnhancer) {
-                    return itemEnhancer(item, result);
+                    return itemEnhancer(item.children, result);
                 }
                 return result as any;
-            }),
+            }), 
         };
         if (enhancer) {
-            return { header: enhancer(rssElement!, rss.header), items: rss.items as any };
+            return { header: enhancer(json, rss.header), items: rss.items as any };
         }
         return rss as any;
     } catch (e) {

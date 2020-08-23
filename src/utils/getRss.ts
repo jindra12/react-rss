@@ -4,8 +4,8 @@ import { Standard2RSSFormat, Standard2RSSFormatItem, Standard2RSSFormatHeader } 
 export const getRss = async <T, E>(
     enhanced: { input: RequestInfo, init?: RequestInit },
     fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
-    headerEnhancer?: (rssElement: Element, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader,
-    itemEnhancer?: (item: Element, standard: Standard2RSSFormatItem) => E & Standard2RSSFormatItem,
+    headerEnhancer?: (header: any, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader,
+    itemEnhancer?: (item: any, standard: Standard2RSSFormatItem) => E & Standard2RSSFormatItem,
 ): Promise<Standard2RSSFormat & { header: T } & { items: E[] }> => {
     if (!fetch) {
         throw Error('Cannot find any fetch function!');

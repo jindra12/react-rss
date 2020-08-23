@@ -35,8 +35,8 @@ export interface InjectionRSSUrlProps {
 
 export interface RSSProps<T = {}, K = {}> extends InjectionRSSUrlProps {
     requestEnhancer?: (url: string) => ({ input: RequestInfo, init?: RequestInit });
-    headerEnhancer?: (rssElement: Element, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader;
-    itemEnhancer?: (item: Element, standard: Standard2RSSFormatItem) => K & Standard2RSSFormatItem;
+    headerEnhancer?: (header: any, standard: Standard2RSSFormatHeader) => T & Standard2RSSFormatHeader;
+    itemEnhancer?: (item: any, standard: Standard2RSSFormatItem) => K & Standard2RSSFormatItem;
     children: (rss: Standard2RSSFormat & { header: T } & { items: K[] }) => JSX.Element | null;
 }
 

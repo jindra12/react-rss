@@ -117,8 +117,8 @@ export const rssEnhancer = <T, E extends (string | null) = null>(
     Component: ((props: T & InjectionRSSProps) => JSX.Element | null) | (new (props: T & InjectionRSSProps) => React.Component<T & InjectionRSSProps>),
     url: E = null as any,
     requestEnhancer?: (url: string) => ({ input: RequestInfo, init?: RequestInit }),
-    headerEnhancer?: <F extends Standard2RSSFormatHeader>(rssElement: Element, standard: Standard2RSSFormatHeader) => F | Standard2RSSFormatHeader,
-    itemEnhancer?: <K extends Standard2RSSFormatItem>(item: Element, standard: Standard2RSSFormatItem) => K | Standard2RSSFormatItem,
+    headerEnhancer?: <F extends Standard2RSSFormatHeader>(header: any, standard: Standard2RSSFormatHeader) => F | Standard2RSSFormatHeader,
+    itemEnhancer?: <K extends Standard2RSSFormatItem>(item: any, standard: Standard2RSSFormatItem) => K | Standard2RSSFormatItem,
 ) => (props: Omit<T, 'rss'> & InjectionRSSUrlProps) => {
     return (
         <RSS

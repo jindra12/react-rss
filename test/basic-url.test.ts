@@ -1,6 +1,6 @@
 import { apiResults } from "./apiResults";
 import { getRss } from "../src/utils/getRss";
-import match from 'matchto';
+import match, { Any } from 'matchto';
 
 global.fetch = jest.fn((url: string) => {
     if (apiResults[url]) {
@@ -21,14 +21,14 @@ describe("Can send and parse basic rss api results", () => {
             { input: "http://static.userland.com/gems/backend/rssTwoExample2.xml" },
             global.fetch,
             (rss, header) => {
-                const newProperty = rss.querySelector('newProperty')?.textContent || '';
+                const newProperty = rss.newproperty?.text;
                 return {
                     ...header,
                     newProperty,
                 };
             },
             (rssItem, item) => {
-                const newProperty = rssItem.querySelector('newProperty')?.textContent || '';
+                const newProperty = rssItem.newproperty?.text;
                 return {
                     newProperty,
                     ...item,
@@ -54,6 +54,6 @@ describe("Can send and parse basic rss api results", () => {
                     pubDate: 'Sun, 29 Sep 2002 19:59:01 GMT',
                 }
             ],
-        }, true).solve()).toBe(true);
+        }, true).to(Any, (item) => console.log(item)).solve()).toBe(true);
     });
 });

@@ -21,14 +21,14 @@ describe("Can send and parse basic rss api results", () => {
             { input: "http://static.userland.com/gems/backend/rssTwoExample2.xml" },
             global.fetch,
             (rss, header) => {
-                const newProperty = rss.newproperty?.text;
+                const newProperty = rss.newProperty?.text;
                 return {
                     ...header,
                     newProperty,
                 };
             },
             (rssItem, item) => {
-                const newProperty = rssItem.newproperty?.text;
+                const newProperty = rssItem.newProperty?.text;
                 return {
                     newProperty,
                     ...item,

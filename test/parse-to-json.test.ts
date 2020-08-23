@@ -16,7 +16,7 @@ complexStructure.appendChild(complexChild);
 describe("Can send and parse basic rss api results", () => {
     test("Can parse basic html structure", () => {
         expect(parseToJson(simpleStructure)).toEqual({
-            span: [
+            SPAN: [
                 { text: 'one' },
                 { text: 'two' },
                 { text: 'three' },
@@ -25,7 +25,7 @@ describe("Can send and parse basic rss api results", () => {
     });
     test("Can parse basic html structure with attributes", () => {
         expect(parseToJson(attributeStructure)).toEqual({
-            span: [
+            SPAN: [
                 { attributes: { id: 'info', name: 'info' } },
                 { attributes: { id: 'info' }, text: 'two' },
                 { text: 'three' },
@@ -34,20 +34,20 @@ describe("Can send and parse basic rss api results", () => {
     });
     test("Can parse more complex html structure", () => {
         expect(parseToJson(complexStructure)).toEqual({
-            div: {
+            DIV: {
                 children: {
-                    span: [
+                    SPAN: [
                         { text: 'one' },
                         { text: 'two' },
                         { text: 'three' },
                     ],
                 }
             },
-            p: {
+            P: {
                 children: {
-                    div: {
+                    DIV: {
                         children: {
-                            span: [
+                            SPAN: [
                                 { attributes: { id: 'info', name: 'info' } },
                                 { attributes: { id: 'info' }, text: 'two' },
                                 { text: 'three' },

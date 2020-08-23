@@ -32,10 +32,10 @@ export default rssEnhancer(
     null,
     url => ({ input: url, init: { method: 'POST' } }), // Enhances the used url request by any optional parameter, such as headers, method, etc.
     (rss, header) => { // Enhances header portion of result
-        return { ...header, hasImage: Boolean(rss.querySelector('image')) };
+        return { ...header, hasImage: Boolean(rss.image) };
     },
-    (rssItem, item) => { // Enhances each item by certain query
-        const mediaUrl = rssItem.querySelector('content')?.getAttribute('url');
+    (rssItem, item) => { // Enhances each item by json property
+        const mediaUrl = rssItem['media:content'].attributes.url;
         if (mediaUrl) {
             return { ...item, mediaUrl };
         }

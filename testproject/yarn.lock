@@ -1982,7 +1982,7 @@ react-is@^16.8.1:
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
 "react-rss@file:../dist":
-  version "0.0.1"
+  version "1.0.0"
 
 react@^16.13.1:
   version "16.13.1"

@@ -22,11 +22,11 @@ export const parseXml = <T, E>(
                 docs: json.docs?.text || '',
                 generator: json.generator?.text || '',
                 language: json.language?.text || '',
-                lastBuildDate: json.lastbuilddate?.text || '',
+                lastBuildDate: json.lastBuildDate?.text || '',
                 link: json.link?.text || '',
-                managingEditor: json.managingeditor?.text || '',
+                managingEditor: json.managingEditor?.text || '',
                 ttl: json.ttl?.text || '',
-                webMaster: json.webmaster?.text || '',
+                webMaster: json.webMaster?.text || '',
                 image: json.image ? {
                     height: json.image.children?.height || '',
                     link: json.image.children?.link || '',
@@ -45,7 +45,7 @@ export const parseXml = <T, E>(
                     description: item.children?.description?.text || '',
                     guid: item.children?.guid?.text || '',
                     link: item.children?.link?.text || '',
-                    pubDate: item.children?.pubdate?.text || '',
+                    pubDate: item.children?.pubDate?.text || '',
                     title: item.children?.title?.text || '',
                     enclosure: enclosure ? {
                         length: enclosure.attributes?.length || '',

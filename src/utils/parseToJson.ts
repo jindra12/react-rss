@@ -3,14 +3,14 @@ const fillWithAttributes = (object: any, node: Element) => {
         object['attributes'] = {};
     }
     for (let i = 0; i < node.attributes.length; i++) {
-        object['attributes'][node.attributes.item(i)!.nodeName.toLowerCase()] = node.attributes.item(i)!.nodeValue;
+        object['attributes'][node.attributes.item(i)!.nodeName] = node.attributes.item(i)!.nodeValue;
     }
 };
 
 export const parseToJson = (xml: Node, carry: { [index: string]: any } = {}): { [index: string]: any } => {
     xml.childNodes.forEach(node => {
         if (node instanceof Element) {
-            const tagName = node.tagName.toLowerCase();
+            const tagName = node.tagName;
             if (!carry['children']) {
                 carry['children'] = {};
             }
@@ -30,8 +30,14 @@ export const parseToJson = (xml: Node, carry: { [index: string]: any } = {}): { 
                 fillWithAttributes(children[tagName], node);
                 parseToJson(node, children[tagName]);
             }
-        } else if (node.nodeType === node.TEXT_NODE) {
-            carry['text'] = node.nodeValue;
+        } else if (node.nodeType === node.TEXT_NODE || node.nodeType === node.CDATA_SECTION_NODE) {
+            if (!/^\s*$/.test(node.nodeValue as string)) {
+                if (!carry['text']) {
+                    carry['text'] = node.nodeValue;
+                } else {
+                    carry['text'] += node.nodeValue;
+                }
+            }
         }
     });
 
